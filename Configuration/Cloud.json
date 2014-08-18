@@ -1,0 +1,21 @@
+﻿{
+	"ReceiveQueue": {
+		"Namespace": "manufacturing",
+		"SharedAccessKeyName": "CloudRead",
+		"SharedAccessKey": "",
+		"QueueName": "receiver",
+		"SubscriptionName": "sqldb"
+	},
+
+	"DataStorageConfiguration" : {
+		"EndpointProtocol" : "https",
+		"AccountName" : "manufacturing",
+		"AccountKey" : "",
+		"RawDataContainer" : "rawdevicedata"
+	},
+	"ReceiveQueueConnectionLimit": 1,
+	"SqlDatabaseConnectionString": "",
+	"StreamingDataEndpointUrl":"http://localhost:3184/",
+	"StreamingDataEndpointHubId":"DatasourceRecordHub",
+	"StreamingDataEndpointMethodId":"Notify"
+}
