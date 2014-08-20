@@ -8,8 +8,8 @@
     <ProjectGuid>{39C3585D-A22E-4B04-BEBD-94C826C2918E}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>WorkerRoleWithSBQueue1</RootNamespace>
-    <AssemblyName>WorkerRoleWithSBQueue1</AssemblyName>
+    <RootNamespace>Manufacturing.FacilityDataProcessor</RootNamespace>
+    <AssemblyName>Manufacturing.FacilityDataProcessor</AssemblyName>
     <ProjectTypeGuids>{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}</ProjectTypeGuids>
     <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
     <RoleType>Worker</RoleType>

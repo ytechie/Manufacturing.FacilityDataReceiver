@@ -10,7 +10,7 @@ using Microsoft.FluentMessaging;
 using WorkerRoleWithSBQueue1.Clients;
 using WorkerRoleWithSBQueue1.Configuration;
 
-namespace WorkerRoleWithSBQueue1
+namespace Manufacturing.FacilityDataProcessor
 {
     /// <summary>
     ///     Receives messages from the Service Bus and relays them to a SignalR hub

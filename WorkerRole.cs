@@ -11,7 +11,7 @@ using Manufacturing.Framework.Logging;
 using Microsoft.Practices.ServiceLocation;
 using Microsoft.WindowsAzure.ServiceRuntime;
 
-namespace WorkerRoleWithSBQueue1
+namespace Manufacturing.FacilityDataProcessor
 {
     public class WorkerRole : RoleEntryPoint
     {

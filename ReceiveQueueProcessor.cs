@@ -4,7 +4,7 @@
 //using log4net;
 //using WorkerRoleWithSBQueue1.Configuration;
 
-//namespace WorkerRoleWithSBQueue1
+//namespace Manufacturing.FacilityDataProcessor
 //{
 //    public class ReceiveQueueProcessor : IStartupTask
 //    {

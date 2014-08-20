@@ -14,7 +14,7 @@ using Manufacturing.Framework.Dto;
 using Microsoft.FluentMessaging;
 using WorkerRoleWithSBQueue1.Configuration;
 
-namespace WorkerRoleWithSBQueue1
+namespace Manufacturing.FacilityDataProcessor
 {
     public class SqlDatabaseInsertService : IStartupTask
     {

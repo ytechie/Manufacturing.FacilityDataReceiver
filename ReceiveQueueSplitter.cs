@@ -6,7 +6,7 @@
 //using Manufacturing.Framework.Datasource;
 //using Microsoft.ServiceBus.Messaging;
 
-//namespace WorkerRoleWithSBQueue1
+//namespace Manufacturing.FacilityDataProcessor
 //{
 //    public class ReceiveQueueSplitter : IQueueProcessor
 //    {
