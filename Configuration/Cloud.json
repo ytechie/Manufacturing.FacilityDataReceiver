@@ -17,5 +17,9 @@
 	"SqlDatabaseConnectionString": "",
 	"StreamingDataEndpointUrl":"http://localhost:3184/",
 	"StreamingDataEndpointHubId":"DatasourceRecordHub",
-	"StreamingDataEndpointMethodId":"Notify"
+    "StreamingDataEndpointMethodId":"Notify",
+
+    "DocDbUri": "",
+    "DocDbKey": "",
+    "DocDbDatabaseName": ""
 }
