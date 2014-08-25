@@ -68,20 +68,27 @@ namespace Manufacturing.FacilityDataProcessor
                 //This code is not as efficient as storing the selfLink in the config, but
                 //I wanted to keep it easy to configure.
 
-                var feed = await client.ReadDatabaseFeedAsync();
-                var db = feed.SingleOrDefault(x => x.Id == _config.DocDbDatabaseName);
-                if (db == null)
+                var dynamicDb = client.CreateDatabaseQuery("select * from root r where r.id = '" + _config.DocDbDatabaseName + "'")
+                    .AsEnumerable().FirstOrDefault();
+
+                string dbSelfLink;
+                if (dynamicDb == null)
                 {
-                    db = new Database { Id = _config.DocDbDatabaseName };
+                    var db = new Database { Id = _config.DocDbDatabaseName };
                     db = await client.CreateDatabaseAsync(db);
+                    dbSelfLink = db.SelfLink;
+                }
+                else
+                {
+                    dbSelfLink = dynamicDb._self;
                 }
 
-                var collectionFeed = await client.ReadDocumentCollectionFeedAsync(db.SelfLink);
+                var collectionFeed = await client.ReadDocumentCollectionFeedAsync(dbSelfLink);
                 var collection = collectionFeed.SingleOrDefault(x => x.Id == DataTableName);
                 if (collection == null)
                 {
                     collection = new DocumentCollection { Id = DataTableName };
-                    collection = await client.CreateDocumentCollectionAsync(db.SelfLink, collection);
+                    collection = await client.CreateDocumentCollectionAsync(dbSelfLink, collection);
                 }
 
                 //Caching the selfLink will help avoid querying the collections excessively
