@@ -36,7 +36,7 @@ namespace Manufacturing.FacilityDataProcessor
         {
             await InitDocDbClient();
 
-            ReadSample();
+            //ReadSample();
 
             var batchProcess = new Action<IEnumerable<DatasourceRecord>>(recordBatch =>
             {
