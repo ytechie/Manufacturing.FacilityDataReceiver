@@ -25,6 +25,7 @@
 
     "EventHubConnectionString": "",
     "EventHubRecieverPath": "receiver",
+    "EventHubConsumerGroup": "",
     "EventHubStorageConnectionString":  ""
 
 }

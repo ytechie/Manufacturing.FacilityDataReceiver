@@ -18,11 +18,19 @@ namespace Manufacturing.FacilityDataProcessor
 
         public void Run()
         {
-            var eventHubClient = EventHubClient.CreateFromConnectionString(_config.EventHubConnectionString, _config.EventHubRecieverPath);
-            var consumerGroup = eventHubClient.GetDefaultConsumerGroup();
+            string consumerGroup;
+            if (string.IsNullOrEmpty(_config.EventHubConsumerGroup))
+            {
+                var eventHubClient = EventHubClient.CreateFromConnectionString(_config.EventHubConnectionString, _config.EventHubRecieverPath);
+                consumerGroup = eventHubClient.GetDefaultConsumerGroup().GroupName;
+            }
+            else
+            {
+                consumerGroup = _config.EventHubConsumerGroup;
+            }
 
             _eventProcessorHost = new EventProcessorHost(Environment.MachineName, _config.EventHubRecieverPath,
-                consumerGroup.GroupName, _config.EventHubConnectionString, _config.EventHubStorageConnectionString);
+                consumerGroup, _config.EventHubConnectionString, _config.EventHubStorageConnectionString);
 
             _eventProcessorHost.RegisterEventProcessorAsync<SqlDatabaseEventProcessor>().Wait();
         }
