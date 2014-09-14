@@ -21,5 +21,9 @@ namespace WorkerRoleWithSBQueue1.Configuration
         public string DocDbUri { get; set; }
         public string DocDbKey { get; set; }
         public string DocDbDatabaseName { get; set; }
+
+        public string EventHubConnectionString { get; set; }
+        public string EventHubRecieverPath { get; set; }
+        public string EventHubStorageConnectionString { get; set; }
     }
 }
