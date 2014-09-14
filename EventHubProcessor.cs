@@ -1,6 +1,7 @@
 ﻿using System;
 using Bootstrap.Extensions.StartupTasks;
 using Manufacturing.FacilityDataProcessor.EventProcessors;
+using Microsoft.ServiceBus;
 using Microsoft.ServiceBus.Messaging;
 using WorkerRoleWithSBQueue1.Configuration;
 
@@ -18,15 +19,18 @@ namespace Manufacturing.FacilityDataProcessor
 
         public void Run()
         {
+            var eventHubClient = EventHubClient.CreateFromConnectionString(_config.EventHubConnectionString, _config.EventHubRecieverPath);
             string consumerGroup;
             if (string.IsNullOrEmpty(_config.EventHubConsumerGroup))
             {
-                var eventHubClient = EventHubClient.CreateFromConnectionString(_config.EventHubConnectionString, _config.EventHubRecieverPath);
                 consumerGroup = eventHubClient.GetDefaultConsumerGroup().GroupName;
             }
             else
             {
                 consumerGroup = _config.EventHubConsumerGroup;
+
+                var ns = NamespaceManager.CreateFromConnectionString(_config.EventHubConnectionString);
+                ns.CreateConsumerGroupIfNotExistsAsync(_config.EventHubRecieverPath, consumerGroup);
             }
 
             _eventProcessorHost = new EventProcessorHost(Environment.MachineName, _config.EventHubRecieverPath,
