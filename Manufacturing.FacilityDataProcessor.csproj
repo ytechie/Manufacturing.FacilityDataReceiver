@@ -187,9 +187,6 @@
     <Compile Include="DocDbInsertService.cs" />
     <Compile Include="EventHubProcessor.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="ReceiveQueueProcessor.cs" />
-    <Compile Include="ReceiveQueuePassthrough.cs" />
-    <Compile Include="ReceiveQueueSplitter.cs" />
     <Compile Include="SignalRRelayService.cs" />
     <Compile Include="EventProcessors\SqlDatabaseEventProcessor.cs" />
     <Compile Include="WorkerRole.cs" />
