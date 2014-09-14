@@ -1,9 +1,7 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Data;
-using System.Data.SqlClient;
+﻿using System.Collections.Generic;
 using System.Diagnostics;
 using System.IO;
+using System.Linq;
 using System.Reflection;
 using System.Threading.Tasks;
 using log4net;
@@ -11,11 +9,14 @@ using Manufacturing.Framework.Datasource;
 using Manufacturing.Framework.Dto;
 using Microsoft.Practices.ServiceLocation;
 using Microsoft.ServiceBus.Messaging;
+using Newtonsoft.Json;
+using RestSharp;
+using RestSharp.Serializers;
 using WorkerRoleWithSBQueue1.Configuration;
 
 namespace Manufacturing.FacilityDataProcessor.EventProcessors
 {
-    public class SqlDatabaseEventProcessor : IConsumerGroupEventProcessor
+    public class OrleansEventProcessor : IConsumerGroupEventProcessor
     {
         private static readonly ILog Log = LogManager.GetLogger(MethodBase.GetCurrentMethod().DeclaringType);
 
@@ -27,7 +28,7 @@ namespace Manufacturing.FacilityDataProcessor.EventProcessors
         private const int MaxBatchSize = 5000;
         private int MaxBatchTimeMS = 10000;
 
-        public SqlDatabaseEventProcessor()
+        public OrleansEventProcessor()
         {
             //We have to get the config from the container unfortunately since this class
             //is being constructed by the event processor host
@@ -37,7 +38,7 @@ namespace Manufacturing.FacilityDataProcessor.EventProcessors
 
         public string ConsumerGroupName
         {
-            get { return "SqlDatabase"; }
+            get { return "OrleansEventProcessor"; }
         }
 
         public Task OpenAsync(PartitionContext context)
@@ -99,41 +100,13 @@ namespace Manufacturing.FacilityDataProcessor.EventProcessors
 
         private void InsertRecords(IEnumerable<DatasourceRecord> recordBatch)
         {
-            var dt = new DataTable();
-            dt.Columns.Add("Id", typeof (int));
-            dt.Columns.Add("DatasourceId", typeof (int));
-            dt.Columns.Add("Timestamp", typeof (DateTime));
-            dt.Columns.Add("IntervalSeconds", typeof (int));
-            dt.Columns.Add("Value", typeof (byte[]));
-            dt.Columns.Add("EncodedDataType", typeof (int));
+            var client = new RestClient(_cloudConfig.OrleansUrl);
 
-            foreach (var record in recordBatch)
-            {
-                var dr = dt.NewRow();
-                dr["DatasourceId"] = record.DatasourceId;
-                dr["Timestamp"] = record.Timestamp;
-                dr["IntervalSeconds"] = record.IntervalSeconds;
-                dr["Value"] = record.Value;
-                dr["EncodedDataType"] = record.EncodedDataType;
+            var json = JsonConvert.SerializeObject(recordBatch);
+            var request = new RestRequest("api/DataRecord", Method.POST);
+            request.AddParameter("application/json", json, ParameterType.RequestBody);
 
-                dt.Rows.Add(dr);
-            }
-
-            using (var connection =
-                new SqlConnection(_cloudConfig.SqlDatabaseConnectionString)
-                )
-            {
-                var sw = new Stopwatch();
-                sw.Start();
-                connection.Open();
-                using (var bulk = new SqlBulkCopy(connection) {DestinationTableName = "dbo.Raw"})
-                {
-                    bulk.WriteToServer(dt);
-                }
-                sw.Stop();
-                Log.DebugFormat("Inserted {0} records into SQL Azure Database in {1}ms", dt.Rows.Count,
-                    sw.ElapsedMilliseconds);
-            }
+            var res = client.Execute(request);
         }
     }
 }

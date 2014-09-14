@@ -26,6 +26,8 @@
     "EventHubConnectionString": "Endpoint=sb://jymfx-ns.servicebus.windows.net/;SharedAccessKeyName=receive;SharedAccessKey=/Yy5f1IPQIvTEGRIpz5sKV1faHZhtRpRDJhz1ktEvWA=",
     "EventHubRecieverPath": "receiver",
     "EventHubConsumerGroup": "sqldb",
-    "EventHubStorageConnectionString":  "DefaultEndpointsProtocol=https;AccountName=manufacturing;AccountKey=0zIO7w2TxYeWjXBYcq8hWZDIFmr2ZMhRgfjQs8huTeDc1EPnERlLcsMhyxaeDZFV7TgwOjHtEY0CEgDYendBFw==;"
+    "EventHubStorageConnectionString":  "DefaultEndpointsProtocol=https;AccountName=manufacturing;AccountKey=0zIO7w2TxYeWjXBYcq8hWZDIFmr2ZMhRgfjQs8huTeDc1EPnERlLcsMhyxaeDZFV7TgwOjHtEY0CEgDYendBFw==;",
+
+    "OrleansUrl": "http://localhost:12904"
 
 }
