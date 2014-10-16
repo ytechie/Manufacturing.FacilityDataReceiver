@@ -45,9 +45,6 @@ namespace Manufacturing.FacilityDataProcessor
             var eventHubProcessor = container.GetInstance<EventHubProcessor>();
             eventHubProcessor.Run();
 
-            var signalRRelay = container.GetInstance<SignalRRelayService>();
-            signalRRelay.Run();
-
             return base.OnStart();
         }
 
