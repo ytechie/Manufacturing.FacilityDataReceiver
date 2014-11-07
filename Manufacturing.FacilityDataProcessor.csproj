@@ -190,11 +190,10 @@
     <Compile Include="Clients\IDataRelayClient.cs" />
     <Compile Include="Clients\SignalRRelayClient.cs" />
     <Compile Include="Configuration\CloudConfiguration.cs" />
-    <Compile Include="DocDbInsertService.cs" />
     <Compile Include="EventHubProcessor.cs" />
     <Compile Include="EventProcessorFactory.cs" />
     <Compile Include="EventProcessors\HttpSendEventProcessor.cs" />
-    <Compile Include="EventProcessors\OrleansEventProcessor.cs" />
+    <Compile Include="EventProcessors\DocDbEventProcessor.cs" />
     <Compile Include="FacilityDataProcessorContainer.cs" />
     <Compile Include="IConsumerGroupEventProcessor.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -226,9 +225,7 @@
       <Name>Manufacturing.Framework</Name>
     </ProjectReference>
   </ItemGroup>
-  <ItemGroup>
-    <Folder Include="Util\" />
-  </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <Import Project="$(SolutionDir)\.nuget\NuGet.targets" Condition="Exists('$(SolutionDir)\.nuget\NuGet.targets')" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
