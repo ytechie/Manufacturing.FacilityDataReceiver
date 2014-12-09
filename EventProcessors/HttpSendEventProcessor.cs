@@ -34,6 +34,11 @@ namespace Manufacturing.FacilityDataProcessor.EventProcessors
             get { return "HttpSend"; }
         }
 
+        public bool RealTimeOnly
+        {
+            get { return true; }
+        }
+
         public Task OpenAsync(PartitionContext context)
         {
             return Task.FromResult<object>(null);

@@ -27,7 +27,7 @@ namespace Manufacturing.FacilityDataProcessor
             foreach (var eventProcessor in _eventProcessors)
             {
                 var consumerGroupName = CreateConsumerGroupIfNeeded(eventProcessor.ConsumerGroupName);
-                processorTasks.Add(StartEventProcessor(eventProcessor, consumerGroupName));
+                processorTasks.Add(StartEventProcessor(eventProcessor, consumerGroupName, eventProcessor.RealTimeOnly));
             }
 
             Task.WaitAll(processorTasks.ToArray());
@@ -48,13 +48,30 @@ namespace Manufacturing.FacilityDataProcessor
             return consumerGroupName;
         }
 
-        private Task StartEventProcessor(IEventProcessor eventProcessor, string consumerGroupName)
+        private Task StartEventProcessor(IEventProcessor eventProcessor, string consumerGroupName, bool realTimeOnly)
         {
             _eventProcessorHost = new EventProcessorHost(Environment.MachineName, _config.EventHubRecieverPath,
                 consumerGroupName, _config.EventHubConnectionString, _config.EventHubStorageConnectionString);
 
+            //We need these options to 
+            var options = new EventProcessorOptions();
+            if(realTimeOnly)
+            {
+                options.InitialOffsetProvider = OnlyNewDataOffsetProvider;
+            }
+
+            //Look at implementing these
+            //options.InvokeProcessorAfterReceiveTimeout = true;
+            //options.PrefetchCount = 1000;
+            //options.ExceptionReceived += options_ExceptionReceived;
+
             var type = eventProcessor.GetType();
-            return _eventProcessorHost.RegisterEventProcessorFactoryAsync(new EventProcessorFactory(type));
+            return _eventProcessorHost.RegisterEventProcessorFactoryAsync(new EventProcessorFactory(type), options);
+        }
+
+        private static string OnlyNewDataOffsetProvider(object context)
+        {
+            return "0";
         }
 
         public void Reset()

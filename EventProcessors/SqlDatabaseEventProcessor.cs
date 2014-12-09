@@ -40,6 +40,11 @@ namespace Manufacturing.FacilityDataProcessor.EventProcessors
             get { return "SqlDatabase"; }
         }
 
+        public bool RealTimeOnly
+        {
+            get { return false; }
+        }
+
         public Task OpenAsync(PartitionContext context)
         {
             return Task.FromResult<object>(null);

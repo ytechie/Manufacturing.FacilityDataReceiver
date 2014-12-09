@@ -46,6 +46,11 @@ namespace Manufacturing.FacilityDataProcessor.EventProcessors
             get { return "DocDb"; }
         }
 
+        public bool RealTimeOnly
+        {
+            get { return false; }
+        }
+
         public async Task OpenAsync(PartitionContext context)
         {
             await InitDocDbClient();
